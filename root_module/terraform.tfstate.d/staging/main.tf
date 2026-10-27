@@ -44,7 +44,7 @@ module "web_app" {
 
   domain           = "projectsphere.dev"
   environment_name = local.environment_name
-  instance_type    = "t3.micro"
+  ec2_instance_type    = "t3.micro"
   create_dns_zone  = false
   #bucket_name = "devops-directive-web-app-data-${local.environment_name}"
   #db_name = "${local.environment_name}mydb"
