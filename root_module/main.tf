@@ -24,6 +24,7 @@ provider "aws" {
 
 module "console" {
   source = "git@github.com:mohamedabdirazak848-spec/Terraform.git"
+  environment_name = terraform.workspace
 }
 
 
