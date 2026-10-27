@@ -38,7 +38,7 @@ locals {
 }
 
 module "web_app" {
-    source = "https://github.com/mohamedabdirazak848-spec/Terraform.git"
+    source = "git::https://github.com/mohamedabdirazak848-spec/Terraform.git"
 
     # Input Variables
     
