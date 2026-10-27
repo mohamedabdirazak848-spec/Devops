@@ -22,10 +22,10 @@ provider "aws" {
   region = "eu-west-2"
 }
 
-# Route53 zone is shared across staging and production
-resource "aws_route53_zone" "primary" {
-  name = "projectsphere.dev"
-}
+# # Route53 zone is shared across staging and production
+# resource "aws_route53_zone" "primary" {
+#   name = "projectsphere.dev"
+# }
 
 #variable "db_pass" {
 #    description = "password for database"

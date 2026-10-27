@@ -23,9 +23,9 @@ provider "aws" {
 }
 
 # Route53 zone is shared across staging and production
-resource "aws_route53_zone" "primary" {
-  name = "projectsphere.dev"
-}
+# resource "aws_route53_zone" "primary" {
+#   name = "projectsphere.dev"
+# }
 
 #variable "db_pass" {
 #    description = "password for database"
