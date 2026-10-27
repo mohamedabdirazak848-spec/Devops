@@ -107,7 +107,7 @@ jobs:
         fi
  
     - name: Terraform Apply Global
-      if: github.event_name == 'push' || github.event_name == 'release' 
+      if: false
       working-directory: root_module/terraform.tfstate.d/global
       run: |
         terraform init
