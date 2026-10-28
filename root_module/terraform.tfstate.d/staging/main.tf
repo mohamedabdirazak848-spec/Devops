@@ -27,11 +27,11 @@ provider "aws" {
 #   name = "projectsphere.dev"
 # }
 
-variable "db_pass" {
-  description = "password for database"
-  type        = string
-  sensitive   = true
-}
+# variable "db_pass" {
+#   description = "password for database"
+#   type        = string
+#   sensitive   = true
+# }
 
 locals {
   environment_name = "staging"
@@ -47,7 +47,7 @@ module "web_app" {
   ec2_instance_type = "t3.micro"
   create_dns_zone   = false
   bucket_name       = "projectsphere-storage-${local.environment_name}"
-  db_name           = "${local.environment_name}mydb"
-  db_user           = "foo"
-  db_pass           = var.db_pass
+  # db_name           = "${local.environment_name}mydb"
+  # db_user           = "foo"
+  # db_pass           = var.db_pass
 }
