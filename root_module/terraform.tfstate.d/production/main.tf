@@ -2,14 +2,14 @@ terraform {
   # Assumes s3 bucket and dynamo DB table already set up
   # See /code/03-basics/aws-backend
 
-  # backend "s3" {
+  backend "s3" {
 
-  #     bucket = "devops-directive-tf-state"
-  #     key  = "07-managing-multiple-environments/global/terraform.tfstate"
-  #     region = "eu-west-2"
-  #     dynamodb_table = "terraform-state-locking"
-  #     encrypt = true
-  #     }
+      bucket = "projectsphere-storage"
+      key  = "terraform/global/terraform.tfstate"
+      region = "eu-west-2"
+      use_lockfile = true
+      encrypt = true
+      }
 
   required_providers {
     aws = {
@@ -27,11 +27,11 @@ provider "aws" {
 #   name = "projectsphere.dev"
 # }
 
-#variable "db_pass" {
-#    description = "password for database"
-#    type = string
-#    sensitive = true
-#}
+variable "db_pass" {
+   description = "password for database"
+   type = string
+   sensitive = true
+}
 
 locals {
   environment_name = "production"
@@ -43,12 +43,12 @@ module "web_app" {
 
   # Input Variables
 
-  #bucket_name = "devops-directive-web-app-data-${local.environment_name}"
+  bucket_name = "projectsphere-storage-${local.environment_name}"
   domain           = "projectsphere.dev"
   environment_name = local.environment_name
   ec2_instance_type    = "t3.micro"
   create_dns_zone  = false
-  #db_name = "${local.environment_name}mydb"
-  #db_user = "foo"
-  #db_pass = var.db_pass
+  db_name = "${local.environment_name}mydb"
+  db_user = "foo"
+  db_pass = var.db_pass
 }

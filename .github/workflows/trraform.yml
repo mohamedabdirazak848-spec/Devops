@@ -1,12 +1,12 @@
 name: "Terraform"
 
 on:
-   push:
-     branches:
-       - main
-   release:
-     types: [published]
-   pull_request:
+  #  push:
+  #    branches:
+  #      - main
+  #  release:
+  #    types: [published]
+  #  pull_request:
 
 jobs:
   terraform:
@@ -25,7 +25,7 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
       with:
-        terraform_version: 1.9.8
+        terraform_version: 1.12.0
         terraform_wrapper: false
 
     - name: Terraform Format
@@ -40,8 +40,7 @@ jobs:
       id: plan
       if: github.event_name == 'pull_request'
       # Route 53 zone must already exist for this to succeed!
-      run: terraform plan -no-color
-      #-var db_pass=${{secrets.DB_PASS }} 
+      run: terraform plan  -var db_pass=${{secrets.DB_PASS }} -no-color
       continue-on-error: true 
         
     - uses: actions/github-script@0.9.0
@@ -105,9 +104,9 @@ jobs:
         else
           echo "environment=unknown" >> "$GITHUB_OUTPUT"
         fi
- 
+    
     - name: Terraform Apply Global
-      if: false
+      if: github.event_name == 'push' || github.event_name == 'release'
       working-directory: root_module/terraform.tfstate.d/global
       run: |
         terraform init
@@ -118,13 +117,11 @@ jobs:
       working-directory: root_module/terraform.tfstate.d/staging
       run: |
         terraform init
-        terraform apply -auto-approve
-      #-var db_pass=${{secrets.DB_PASS }} 
+        terraform apply -var db_pass=${{secrets.DB_PASS }} -auto-approve
   
     - name: Terraform Apply Production
       if: steps. check-tag.outputs.environment == 'production' && github.event_name == 'release' 
       working-directory: root_module/terraform.tfstate.d/production
       run: |
         terraform init
-        terraform apply -auto-approve
-      # -var db_pass=${{secrets.DB_PASS }}
+        terraform apply -var db_pass=${{secrets.DB_PASS }} -auto-approve

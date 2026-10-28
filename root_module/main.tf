@@ -1,13 +1,13 @@
 terraform {
 
   #Assumes s3 bucket and dynamodb table already created 
-  #backend "s3" {
-  #  bucket = "devops-directive-tf-state"
-  #  key = "03-basics/webb-app/terraform.tfstate"
-  #  region = "eu-west-2"
-  #  dynamodb_table = "terraform-state-locking"
-  #  encrypt = true
-  #}
+  backend "s3" {
+   bucket = "projectsphere-storage"
+   key = "terraform/root/terraform.tfstate"
+   region = "eu-west-2"
+   use_lockfile = true
+   encrypt = true
+  }
 
   required_providers {
     aws = {
