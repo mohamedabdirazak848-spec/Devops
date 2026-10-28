@@ -46,7 +46,7 @@ module "web_app" {
   environment_name  = local.environment_name
   ec2_instance_type = "t3.micro"
   create_dns_zone   = false
-  bucket_name       = "projectsphere-storage-${local.environment_name}"
+  # bucket_name       = "projectsphere-storage-${local.environment_name}"
   # db_name           = "${local.environment_name}mydb"
   # db_user           = "foo"
   # db_pass           = var.db_pass

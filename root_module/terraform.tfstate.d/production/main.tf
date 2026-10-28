@@ -43,7 +43,7 @@ module "web_app" {
 
   # Input Variables
 
-  bucket_name       = "projectsphere-storage-${local.environment_name}"
+  # bucket_name       = "projectsphere-storage-${local.environment_name}"
   domain            = "projectsphere.dev"
   environment_name  = local.environment_name
   ec2_instance_type = "t3.micro"
