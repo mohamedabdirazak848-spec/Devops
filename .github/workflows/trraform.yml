@@ -1,12 +1,12 @@
 name: "Terraform"
 
 on:
-  #  push:
-  #    branches:
-  #      - main
-  #  release:
-  #    types: [published]
-  #  pull_request:
+   push:
+     branches:
+       - main
+   release:
+     types: [published]
+   pull_request:
 
 jobs:
   terraform:
@@ -40,7 +40,8 @@ jobs:
       id: plan
       if: github.event_name == 'pull_request'
       # Route 53 zone must already exist for this to succeed!
-      run: terraform plan  -var db_pass=${{secrets.DB_PASS }} -no-color
+      run: terraform plan  -no-color
+      #-var db_pass=${{secrets.DB_PASS }}
       continue-on-error: true 
         
     - uses: actions/github-script@0.9.0
@@ -117,11 +118,13 @@ jobs:
       working-directory: root_module/terraform.tfstate.d/staging
       run: |
         terraform init
-        terraform apply -var db_pass=${{secrets.DB_PASS }} -auto-approve
+        terraform apply  -auto-approve
+      #-var db_pass=${{secrets.DB_PASS }}
   
     - name: Terraform Apply Production
       if: steps. check-tag.outputs.environment == 'production' && github.event_name == 'release' 
       working-directory: root_module/terraform.tfstate.d/production
       run: |
         terraform init
-        terraform apply -var db_pass=${{secrets.DB_PASS }} -auto-approve
+        terraform apply  -auto-approve
+      #-var db_pass=${{secrets.DB_PASS }}
