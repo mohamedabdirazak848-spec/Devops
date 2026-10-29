@@ -1,11 +1,9 @@
 terraform {
   # Assumes s3 bucket and dynamo DB table already set up
   # See /code/03-basics/aws-backend
-
-  backend "s3" {
-
+ backend "s3" {
     bucket       = "projectsphere-storage"
-    key          = "terraform.tfstate.d/global/terraform.tfstate"
+    key          = "terraform.tfstate.d/production/terraform.tfstate"
     region       = "eu-west-2"
     use_lockfile = true
     encrypt      = true
@@ -39,7 +37,6 @@ locals {
 
 module "web_app" {
   source = "git::https://github.com/mohamedabdirazak848-spec/Terraform.git"
-
 
   # Input Variables
 

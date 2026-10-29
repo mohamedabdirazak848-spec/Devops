@@ -5,7 +5,7 @@ terraform {
   backend "s3" {
 
     bucket       = "projectsphere-storage"
-    key          = "terraform.tfstate.d/global/terraform.tfstate"
+    key          = "terraform.tfstate.d/staging/terraform.tfstate"
     region       = "eu-west-2"
     use_lockfile = true
     encrypt      = true
