@@ -35,8 +35,8 @@ provider "aws" {
 
 locals {
   environment_name = "staging"
-  zone_id      = data.terraform_remote_state.global.outputs.zone_id
-  name_servers = data.terraform_remote_state.global.outputs.name_servers
+  zone_id          = data.terraform_remote_state.global.outputs.zone_id
+  name_servers     = data.terraform_remote_state.global.outputs.name_servers
 }
 
 data "terraform_remote_state" "global" {
