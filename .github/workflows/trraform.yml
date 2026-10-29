@@ -108,14 +108,14 @@ jobs:
     
     - name: Terraform Apply Global
       if: github.event_name == 'push' || github.event_name == 'release'
-      working-directory: root_module
+      working-directory: root_module/terraform.tfstate.d/global
       run: |
         terraform init
         terraform apply -auto-approve
   
     - name: Terraform Apply Staging
       if: steps.check-tag.outputs.environment == 'staging' && github.event_name == 'push'
-      working-directory: root_module
+      working-directory: root_module/terraform.tfstate.d/staging
       run: |
         terraform init
         terraform apply  -auto-approve
@@ -123,7 +123,7 @@ jobs:
   
     - name: Terraform Apply Production
       if: steps. check-tag.outputs.environment == 'production' && github.event_name == 'release' 
-      working-directory: root_module
+      working-directory: root_module/terraform.tfstate.d/production
       run: |
         terraform init
         terraform apply  -auto-approve
