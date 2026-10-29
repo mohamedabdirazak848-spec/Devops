@@ -24,7 +24,7 @@ provider "aws" {
 module "console" {
   source           = "git::https://github.com/mohamedabdirazak848-spec/Terraform.git"
   environment_name = terraform.workspace
-  create_dns_zone = terraform.workspace == "global"
+  create_dns_zone  = terraform.workspace == "global"
 }
 
 output "name_servers" {

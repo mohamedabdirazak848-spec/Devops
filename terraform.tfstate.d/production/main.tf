@@ -1,7 +1,7 @@
 terraform {
   # Assumes s3 bucket and dynamo DB table already set up
   # See /code/03-basics/aws-backend
- backend "s3" {
+  backend "s3" {
     bucket       = "projectsphere-storage"
     key          = "terraform.tfstate.d/production/terraform.tfstate"
     region       = "eu-west-2"
