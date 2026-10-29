@@ -35,6 +35,17 @@ provider "aws" {
 
 locals {
   environment_name = "staging"
+  zone_id      = data.terraform_remote_state.global.outputs.zone_id
+  name_servers = data.terraform_remote_state.global.outputs.name_servers
+}
+
+data "terraform_remote_state" "global" {
+  backend = "s3"
+  config = {
+    bucket = "projectsphere-storage"
+    key    = "terraform.tfstate.d/global/terraform.tfstate"
+    region = "eu-west-2"
+  }
 }
 
 module "web_app" {

@@ -35,6 +35,23 @@ locals {
   environment_name = "production"
 }
 
+data "aws_route53_zone" "main" {
+  name         = "projectsphere.dev"
+  private_zone = false
+}
+
+resource "aws_route53_record" "app" {
+  zone_id = data.aws_route53_zone.main.zone_id
+  name    = "production.projectsphere.dev"
+  type    = "A"
+
+  alias {
+    name                   = module.web_app.alb_dns_name
+    zone_id                = module.web_app.alb_zone_id
+    evaluate_target_health = true
+  }
+}
+
 module "web_app" {
   source = "git::https://github.com/mohamedabdirazak848-spec/Terraform.git"
 
