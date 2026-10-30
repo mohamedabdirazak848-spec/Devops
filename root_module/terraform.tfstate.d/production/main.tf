@@ -33,22 +33,16 @@ provider "aws" {
 
 locals {
   environment_name = "production"
+  zone_id          = data.terraform_remote_state.global.outputs.zone_id
+  name_servers     = data.terraform_remote_state.global.outputs.name_servers
 }
 
-data "aws_route53_zone" "main" {
-  name         = "projectsphere.dev"
-  private_zone = false
-}
-
-resource "aws_route53_record" "app" {
-  zone_id = data.aws_route53_zone.main.zone_id
-  name    = "production.projectsphere.dev"
-  type    = "A"
-
-  alias {
-    name                   = module.web_app.alb_dns_name
-    zone_id                = module.web_app.alb_zone_id
-    evaluate_target_health = true
+data "terraform_remote_state" "global" {
+  backend = "s3"
+  config = {
+    bucket = "projectsphere-storage"
+    key    = "terraform.tfstate.d/global/terraform.tfstate"
+    region = "eu-west-2"
   }
 }
 
@@ -62,6 +56,7 @@ module "web_app" {
   environment_name  = local.environment_name
   ec2_instance_type = "t3.micro"
   create_dns_zone   = false
+  zone_id           = local.zone_id
   # db_name           = "${local.environment_name}mydb"
   # db_user           = "foo"
   # db_pass           = var.db_pass

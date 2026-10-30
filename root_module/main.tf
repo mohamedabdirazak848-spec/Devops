@@ -17,6 +17,17 @@ terraform {
   }
 }
 
+data "terraform_remote_state" "global" {
+  count   = terraform.workspace == "global" ? 0 : 1
+  backend = "s3"
+  config = {
+    bucket = "projectsphere-storage"
+    key    = "terraform.tfstate.d/global/terraform.tfstate"
+    region = "eu-west-2"
+  }
+}
+
+
 provider "aws" {
   region = "eu-west-2"
 }
@@ -25,6 +36,7 @@ module "console" {
   source           = "git::https://github.com/mohamedabdirazak848-spec/Terraform.git"
   environment_name = terraform.workspace
   create_dns_zone  = terraform.workspace == "global"
+  zone_id          = terraform.workspace == "global" ? null : data.terraform_remote_state.global[0].outputs.zone_id
 }
 
 output "name_servers" {
