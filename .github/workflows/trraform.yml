@@ -80,6 +80,8 @@ jobs:
         actions/setup-go@v5
       with:
         go-version: 1.22
+        cache: true
+        cache-dependency-path: go.sum
    
     - name: Terratest Execution
       if: github.event_name == 'pull_request' 
